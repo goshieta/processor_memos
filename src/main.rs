@@ -65,12 +65,26 @@ impl Config {
 
 #[post("/webhook")]
 async fn webhook_handler(
-    body: web::Json<MemosWebhook>,
+    body: String,
     config: web::Data<Config>,
 ) -> HttpResponse {
+    // デバッグ用: 受信したリクエストボディをそのまま出力
+    eprintln!("=== Received webhook body ===");
+    eprintln!("{body}");
+    eprintln!("=== End of webhook body ===");
+
+    let webhook: MemosWebhook = match serde_json::from_str(&body) {
+        Ok(w) => w,
+        Err(e) => {
+            eprintln!("Failed to deserialize webhook body: {e}");
+            return HttpResponse::BadRequest()
+                .body(format!("Invalid webhook payload: {e}"));
+        }
+    };
+
     let payload = ProcessingPayload {
         source: "memos".into(),
-        content: body.memo.content.clone(),
+        content: webhook.memo.content.clone(),
     };
 
     let client = match reqwest::Client::builder().build() {
