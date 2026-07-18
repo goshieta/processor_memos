@@ -5,34 +5,43 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize)]
 struct MemosWebhook {
+    #[allow(dead_code)]
+    url: String,
     #[serde(rename = "activityType")]
     #[allow(dead_code)]
     activity_type: String,
-    #[serde(rename = "creatorId")]
     #[allow(dead_code)]
-    creator_id: i64,
-    #[serde(rename = "createdTs")]
-    #[allow(dead_code)]
-    created_ts: i64,
+    creator: String,
     memo: Memo,
 }
 
 #[derive(Debug, Deserialize)]
 struct Memo {
     #[allow(dead_code)]
-    id: String,
+    name: String,
+    #[allow(dead_code)]
+    state: i32,
+    #[allow(dead_code)]
+    creator: String,
+    #[serde(rename = "create_time")]
+    #[allow(dead_code)]
+    create_time: Option<Timestamp>,
+    #[serde(rename = "update_time")]
+    #[allow(dead_code)]
+    update_time: Option<Timestamp>,
     content: String,
     #[allow(dead_code)]
-    visibility: String,
+    visibility: i32,
     #[allow(dead_code)]
-    #[serde(rename = "createdTs")]
-    created_ts: i64,
+    property: serde_json::Value,
     #[allow(dead_code)]
-    #[serde(rename = "updatedTs")]
-    updated_ts: i64,
+    snippet: String,
+}
+
+#[derive(Debug, Deserialize)]
+struct Timestamp {
     #[allow(dead_code)]
-    #[serde(rename = "rowStatus")]
-    row_status: String,
+    seconds: i64,
 }
 
 // ── Processing server payload ──────────────────────────────────────────

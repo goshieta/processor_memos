@@ -13,16 +13,18 @@ memosのwebhookのスキーマは以下の通り
 ```json
 {
   "url": "https://your-webhook-endpoint.com",
-  "activityType": "memo.create", 
-  "creatorId": 1,
-  "createdTs": 1718000000,
+  "activityType": "memos.memo.created",
+  "creator": "users/username",
   "memo": {
-    "id": "...",
+    "name": "memos/memoid",
+    "state": 1,
+    "creator": "users/stardust5905",
+    "create_time": {"seconds": 1784339156},
+    "update_time": {"seconds": 1784339156},
     "content": "ここにメモの本文（Markdown）が入ります",
-    "visibility": "PRIVATE",
-    "createdTs": 1718000000,
-    "updatedTs": 1718000000,
-    "rowStatus": "NORMAL"
+    "visibility": 1,
+    "property": {},
+    "snippet": "ここにメモの本文のプレビューが入ります"
   }
 }
 ```
